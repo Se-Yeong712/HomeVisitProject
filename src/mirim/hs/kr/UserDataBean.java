@@ -43,8 +43,7 @@ public class UserDataBean {
 	public void setPart(int part) {
 		this.part = part;
 	}
-	
-	
+
 	public int getPoint() {
 		return point;
 	}

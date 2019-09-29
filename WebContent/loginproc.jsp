@@ -7,6 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
+
 </head>
 <body>
 <%
@@ -19,7 +20,14 @@
 	
 	if(check==1){
 		session.setAttribute("user", user.getMember(id));
-		response.sendRedirect("index.jsp");
+		int x = user.getTodayCheck(id);
+		if(x==1){
+			System.out.println("x"+x);
+			out.println("<script>alert('출석포인트가 적립되었습니다.'); location.href='index.jsp';</script>");
+		}
+		if(x==0){
+			out.println("<script>location.href='index.jsp';</script>");
+		}
 
 	}
 	else if(check==0){

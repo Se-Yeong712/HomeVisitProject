@@ -1,8 +1,11 @@
 package mirim.hs.kr;
 
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
+
+import sun.security.action.GetIntegerAction;
 
 
 public class UserDBBean {
@@ -10,7 +13,6 @@ public class UserDBBean {
 	private static UserDBBean instance = new UserDBBean();
 	public static UserDBBean getInstance() {
 		return instance;
-		//싱글톤패턴 -> db작업은 하나만 있으면 되니까 static으로 만듬
 	}
 	
 	private Connection getConnection() throws Exception{
@@ -80,15 +82,15 @@ public int userCheck(String id, String pw) throws Exception{
 			dbpass = rs.getString("pw");
 			if(dbpass.equals(pw)) {
 
-				x = 1;	//인증성공
+				x = 1;	
 			}
 			else {
-				x=0;	//비밀번호 틀림
+				x=0;	
 			}
 			
 		}
 		else {
-			x=-1;	//해당 아이디 없음.
+			x=-1;
 		}
 		
 	} catch (Exception e) {
@@ -156,33 +158,40 @@ public UserDataBean getMember(String id) throws Exception{
 	return login;
 }
 	
-	
-	
-public List<UserDataBean> getMemberList() throws Exception{
+
+
+
+
+public int getTodayCheck(String id) throws Exception{
 	Connection conn = null;
 	PreparedStatement pstmt = null;
 	ResultSet rs = null;
-	List<UserDataBean> userlist = null;
+	Date sysdate = new Date(System.currentTimeMillis());
+	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 	
+	int x=0;
 	
 	try {
 		
 		conn = getConnection();
-		String sql = "select * from usertbl";
+		String sql = "select point, today from usertbl where id=?";
 		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
 		rs = pstmt.executeQuery();
-		
-		userlist = new ArrayList<>();
 
-		while(rs.next()) {
-			UserDataBean user = new UserDataBean();
-			user.setId(rs.getString("id"));
-			user.setName(rs.getString("Name"));
-			user.setPart(rs.getInt("part"));
-			userlist.add(user);
+		
+		if(rs.next()) {
+			
+			String time1 = dateFormat.format(rs.getDate("today"));
+			String time2 = dateFormat.format(sysdate);
+			
+			if(time1.compareTo(time2) != 0){
+				updateTodayCheck(id, rs.getInt("point")+3);
+				x=1;
+				System.out.println("sysdate");
+			}
+			
 		}
-		
-
 		
 	} catch (Exception e) {
 		e.printStackTrace();
@@ -198,10 +207,113 @@ public List<UserDataBean> getMemberList() throws Exception{
 		}
 	
 	}
+	return x;
 	
-	return userlist;
 	
-}	
+}
+
+
+public void updateTodayCheck(String id, int point) throws Exception{
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		
+		conn = getConnection();
+		String sql = "update usertbl set point=?, today=sysdate where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,point);
+		pstmt.setString(2,id);
+		
+		pstmt.executeUpdate();
+					
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally{
+		if(pstmt!=null){
+			try{pstmt.close();} catch(Exception e){}
+		}
+		if(conn!=null){
+			try{conn.close();} catch(Exception e){}
+		}		
+	}	
+}
+
+
+
+
+public int getPoint(String id) throws Exception{
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	ResultSet rs = null;
+	int point=0;
+	
+	try {
+		
+		conn = getConnection();
+		String sql = "select point from usertbl where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setString(1, id);
+		rs = pstmt.executeQuery();
+
+		
+		if(rs.next()) {
+			point =  rs.getInt("point");
+
+		}
+		
+	} catch (Exception e) {
+		e.printStackTrace();
+	}finally{
+		if(rs!=null){
+			try{rs.close();} catch(Exception e){}
+		}
+		if(pstmt!=null){
+			try{pstmt.close();} catch(Exception e){}
+		}
+		if(conn!=null){
+			try{conn.close();} catch(Exception e){}
+		}
+	
+	}
+	return point;
+	
+}
+
+
+
+public void updatePoint(String id, int point) throws Exception{
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		
+		conn = getConnection();
+		String sql = "update usertbl set point=point+? where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,point);
+		pstmt.setString(2,id);
+		
+		pstmt.executeUpdate();
+					
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally{
+		if(pstmt!=null){
+			try{pstmt.close();} catch(Exception e){}
+		}
+		if(conn!=null){
+			try{conn.close();} catch(Exception e){}
+		}		
+	}	
+}
+
 	
 	
 	

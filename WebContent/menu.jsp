@@ -11,6 +11,9 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+  <script src="http://code.jquery.com/jquery-3.4.0.min.js"></script>
+
+  
 <style>
 .topnav {
   overflow: hidden;
@@ -49,7 +52,7 @@
 
 <c:if test="${user.id != null }">
 <div class="topnav-right">
-<b>${user.name}</b>님이 로그인하셨습니다.
+${user.name}님이 로그인하셨습니다.<br>
 </div>
 <a class="nav-link" href="index.jsp" >MAIN</a>
 <c:if test="${user.part == 1 }">
