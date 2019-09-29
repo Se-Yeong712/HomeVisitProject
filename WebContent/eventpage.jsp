@@ -13,7 +13,7 @@
 <br>
 <div class="container">
 <div class="row">
- <div class="col-sm-4">
+ <div class="col-md-6">
 <div class="card" style="width:100%">
     <img class="card-img-top" src="https://lh3.googleusercontent.com/ROvHQE4ipbNzOAeb6EDaXFIN4IERJKDvuf4snz6FF-EUzQz4dLh2mbzui829DET3Wq83" alt="Card image" style="width:100%">
     <div class="card-body">
@@ -24,35 +24,27 @@
 </div>
 </div>
 
- <div class="col-sm-4">
+ <div class="col-md-6">
 <div class="card" style="width:100%">
     <img class="card-img-top" src="https://data.ac-illust.com/data/thumbnails/9a/9a3bd37a71b632e7726f149bbd771052_t.jpeg" alt="Card image" style="width:100%">
     <div class="card-body">
       <h4 class="card-title">가위바위보</h4>
       <p class="card-text">이기면 5Point!</p>
       <button class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal2">하러가기</button>
+    <br>
     </div>
 </div>
 </div>
 
 
- <div class="col-sm-4">
-<div class="card" style="width:100%">
-    <img class="card-img-top" src="https://scontent.cdninstagram.com/vp/15e05c8e60604496f59d9db4a28f411a/5DB796ED/t51.2885-15/e35/s480x480/25017370_1607915379298457_5450685086309548032_n.jpg?_nc_ht=scontent-lax3-2.cdninstagram.com" alt="Card image" style="width:100%">
-    <div class="card-body">
-      <h4 class="card-title">동전긁기</h4>
-      <p class="card-text">동전긁기로 행운을 확인하세요!</p>
-      <button class="btn btn-outline-primary" data-toggle="modal" data-target="#myModal3">하러가기</button>
-    </div>
-</div>
-</div>
+<br>
 <br>
 <br>
 <button style="margin:0 auto" class="btn btn-warning" onclick="payment()" id="payment">게임비 내기</button>
 <button style="margin:0 auto" class="btn btn-danger" onclick="savepoint()" id="point">Point받기</button>
 
 </div>
-
+<br>
 </div>
 
 
@@ -124,8 +116,8 @@ $(document).ready(function(){
 	$(".sel3").click(function(){
 		sel=3;
 		alert("보를 선택했습니다.");
+		$('img.sel1').remove();
 		$('img.sel2').remove();
-		$('img.sel3').remove();
 		$("div.rock button").removeAttr('hidden');
 	});
 	
@@ -260,30 +252,7 @@ $(document).ready(function(){
   </div>
   
   
-  
-  
-  <div class="modal" id="myModal3">
-    <div class="modal-dialog">
-      <div class="modal-content">
-      
-        <div class="modal-header">
-          <h4 class="modal-title">동전긁기</h4>
-          <button type="button" class="close" data-dismiss="modal">&times;</button>
-        </div>
-        
-        <div class="modal-body">
-         	<table>
-         	
-         	</table>
-        </div>
-        
-        <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
-        </div>
-        
-      </div>
-    </div>
-  </div>
+
   
   
   

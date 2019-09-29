@@ -314,8 +314,65 @@ public void updatePoint(String id, int point) throws Exception{
 	}	
 }
 
+public void updateTicket(String id, int ticket) throws Exception{
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		
+		conn = getConnection();
+		String sql = "update usertbl set ticket=ticket-? where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,ticket);
+		pstmt.setString(2,id);
+		
+		pstmt.executeUpdate();
+					
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally{
+		if(pstmt!=null){
+			try{pstmt.close();} catch(Exception e){}
+		}
+		if(conn!=null){
+			try{conn.close();} catch(Exception e){}
+		}		
+	}	
+}
 	
 	
+public void updatechange(UserDataBean user) throws Exception{
+	
+	Connection conn = null;
+	PreparedStatement pstmt = null;
+	
+	try {
+		
+		conn = getConnection();
+		String sql = "update usertbl set point=?, ticket=ticket+? where id=?";
+		pstmt = conn.prepareStatement(sql);
+		pstmt.setInt(1,user.getPoint());
+		pstmt.setInt(2, user.getTicket());
+		pstmt.setString(3,user.getId());
+		
+		pstmt.executeUpdate();
+					
+	}
+	catch(Exception e) {
+		e.printStackTrace();
+	}
+	finally{
+		if(pstmt!=null){
+			try{pstmt.close();} catch(Exception e){}
+		}
+		if(conn!=null){
+			try{conn.close();} catch(Exception e){}
+		}		
+	}	
+}
 	
 
 }

@@ -43,7 +43,7 @@
 </head>
 <body>
 <br>
-<div class="title" style="text-align: center"><h2>HOME VISIT</h2></div>
+<div class="title" style="text-align: center"><h2>HOME VISIT EVENT</h2></div>
 <div class="topnav">
 <c:if test="${user.id eq null }">
 <a class="nav-link" href="login.jsp" >로그인</a>

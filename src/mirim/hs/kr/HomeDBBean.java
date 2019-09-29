@@ -31,7 +31,7 @@ public void insertHome(HomeDataBean home) throws Exception{
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
-		System.out.println(home);
+		
 		try {
 			
 			conn = getConnection();
@@ -69,7 +69,7 @@ public List<HomeDataBean> getHomeList() throws Exception{
 	try {
 		
 		conn = getConnection();
-		String sql = "select * from hometbl";
+		String sql = "select * from hometbl order by homecode";
 		pstmt = conn.prepareStatement(sql);
 		rs = pstmt.executeQuery();
 		

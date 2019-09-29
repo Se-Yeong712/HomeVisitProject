@@ -20,14 +20,22 @@
 	
 	if(check==1){
 		session.setAttribute("user", user.getMember(id));
-		int x = user.getTodayCheck(id);
-		if(x==1){
-			System.out.println("x"+x);
-			out.println("<script>alert('출석포인트가 적립되었습니다.'); location.href='index.jsp';</script>");
+		session.setAttribute("id", id);
+		if(user.getMember(id).getPart()==1){
+			int x = user.getTodayCheck(id);
+			if(x==1){
+				System.out.println("x"+x);
+				out.println("<script>alert('출석포인트가 적립되었습니다.'); location.href='index.jsp';</script>");
+			}
+			if(x==0){
+				out.println("<script>location.href='index.jsp';</script>");
+			}
 		}
-		if(x==0){
+		
+		if(user.getMember(id).getPart()==2){
 			out.println("<script>location.href='index.jsp';</script>");
 		}
+		
 
 	}
 	else if(check==0){

@@ -1,14 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=EUC-KR"
-    pageEncoding="EUC-KR"%>
+<%@page import="java.util.List"%>
+<%@page import="mirim.hs.kr.ApplyDataBean"%>
+<%@page import="mirim.hs.kr.ApplyDBBean"%>
+<%@page import="mirim.hs.kr.UserDataBean"%>
+<%@page import="mirim.hs.kr.UserDBBean"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="EUC-KR">
 <title>Insert title here</title>
+<script>
+function result(){
+	
+	var win = window.open("result.jsp","resultForm","width=700,height=300,resizable=no,scrollbars=no");
+}
+
+
+
+
+</script>
+
+
+
 </head>
 <body>
 <%
-	
+String id = (String)session.getAttribute("id");
+UserDBBean userdb = UserDBBean.getInstance();
+UserDataBean user = userdb.getMember(id);
+
+request.setAttribute("user", user);
+
+
+ApplyDBBean applydb = ApplyDBBean.getInstance();
+List<ApplyDataBean> applylist = applydb.getApplyList(id);
+
+request.setAttribute("applylist", applylist);
 
 %>
 
@@ -16,28 +45,61 @@
 <div class="container">
 <br>
 <br>
-<h4>³» Á¤º¸</h4>
+<h4>ë‚´ ì •ë³´</h4>
 <table class="table">
+<colgroup>
+<col width="20%" />
+<col width="40%" />
+<col width="40%" />
+</colgroup>
 <tr> 
-	<th>ÀÌ¸§</th>
+	<th>ì´ë¦„</th>
 	<th>point</th>
-	<th>ÀÀ¸ğ±Ç</th>
-	<th>»ç¿ëµÈ ÀÀ¸ğ±Ç</th>
+	<th>ì‘ëª¨ê¶Œ</th>
 </tr>
-
+<tr>
+	<td>${user.name }</td>
+	<td>${user.point }
+		<c:if test="${user.point >= 10 }">
+			&nbsp;&nbsp;<button class="btn btn-outline-secondary" onclick="location.href='toticket.jsp'">ì‘ëª¨ê¶Œìœ¼ë¡œ êµí™˜</button>
+		</c:if> 
+	</td>
+	<td>${user.ticket }</td>
 
 </table>
 <br>
 <br>
- <h4>ÀÀ¸ğ ÇöÈ²</h4>
+ <h4>ì‘ëª¨ í˜„í™©</h4>
 <table class="table">
+<colgroup>
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+<col width="25%" />
+</colgroup>
 	<tr>
-		<th>Áı</th>
-		<th>ÁıÁÖÀÎ</th>
-		<th>ÀÀ¸ğÈ½¼ö</th>
-		<th>´çÃ·È®ÀÎ</th>
+		<th>ì§‘ ë²ˆí˜¸</th>
+		<th>ì§‘ì£¼ì¸</th>
+		<th>ì‘ëª¨íšŸìˆ˜</th>
+		<th>ë‹¹ì²¨í™•ì¸</th>
 	</tr>
-
+	<c:forEach items="${applylist }" var="list">
+		<tr>
+			<td>${list.homecode }</td>
+			<td>${list.admin }</td>
+			<td>${list.applycount }</td>
+			<td>
+			<c:if test="${list.result == 0}">
+				ë¯¸ë‹¹ì²¨
+			</c:if>
+			<c:if test="${list.result == 1}">
+				<button class="btn btn-primary" onclick="result()">ë‹¹ì²¨ê¶Œ í™•ì¸</button>
+			</c:if>
+			</td>
+			
+		</tr>
+	
+	</c:forEach>
 
 </table>
 </div>

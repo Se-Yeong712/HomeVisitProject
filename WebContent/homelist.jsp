@@ -15,7 +15,7 @@
 <div class="container">
 <br>
 <br>
-<h2>이벤트 목록</h2>
+<h2>HOME 목록</h2>
 <%
 	HomeDBBean homedb = HomeDBBean.getInstance();
 	List<HomeDataBean> homelist = homedb.getHomeList();
@@ -37,7 +37,7 @@
 		<td>${list.address}</td>
 		<td>${list.content }</td>
 		<td>${list.id }</td>
-		<td><a href="homeapply.jsp?homecode=${list.homecode }">응모하기</a>
+		<td><a href="homeapply.jsp?homecode=${list.homecode }">응모하기</a></td>
 	</tr>
 	</c:forEach>
 </table>
